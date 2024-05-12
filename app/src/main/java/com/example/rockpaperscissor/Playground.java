@@ -1,8 +1,11 @@
 package com.example.rockpaperscissor;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -23,6 +26,7 @@ public class Playground extends AppCompatActivity {
     private int playerScore = 0;
     private final String[] choices = {"rock", "paper", "scissor"};
     private ImageView display;
+    private MediaPlayer rockSound, paperSound, scissorSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,9 @@ public class Playground extends AppCompatActivity {
         });
 
         // inside onCreate
-
+        rockSound = MediaPlayer.create(this, R.raw.rock_sound);
+        paperSound = MediaPlayer.create(this, R.raw.paper_sound);
+        scissorSound = MediaPlayer.create(this, R.raw.scissor_sound);
 
     }
 
@@ -71,26 +77,34 @@ public class Playground extends AppCompatActivity {
         TextView comScoreTextView = findViewById(R.id.comScore);
         TextView playerScoreTextView = findViewById(R.id.playerScore);
 
+        Animation blink_anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blinktext); // textanimation
+
         if(scorer.equals("both")){
             playerScore++;
             comScore++;
-            comScoreTextView.setText("Comp: "+comScore);
+            comScoreTextView.setText("Comp: "+comScore);    // set new score
             playerScoreTextView.setText("You: "+playerScore);
-            comScoreTextView.setTextColor(getResources().getColor(R.color.green));
+            comScoreTextView.setTextColor(getResources().getColor(R.color.green));  // set different color for scorer
             playerScoreTextView.setTextColor(getResources().getColor(R.color.green));
 
+            playerScoreTextView.startAnimation(blink_anim); // blink the scorer's score
+            comScoreTextView.startAnimation(blink_anim);
         }
         else if(scorer.equals("player")){
             playerScore++;
             playerScoreTextView.setText("You: " + playerScore);
             playerScoreTextView.setTextColor(getResources().getColor(R.color.green));
             comScoreTextView.setTextColor(getResources().getColor(R.color.black));
+
+            playerScoreTextView.startAnimation(blink_anim);
         }
         else {
             comScore++;
             comScoreTextView.setText("Comp: " + comScore);
             comScoreTextView.setTextColor(getResources().getColor(R.color.green));
             playerScoreTextView.setTextColor(getResources().getColor(R.color.black));
+
+            comScoreTextView.startAnimation(blink_anim);
         }
 
         if(comScore==5||playerScore==5){
@@ -100,18 +114,21 @@ public class Playground extends AppCompatActivity {
 
     // selection
     public void rockSelected(View view) {
+        rockSound.start();  // sound effect
         String com = comChoice();
         String gif = com+"_rock";
         updateDisplay(gif);
         updateResult(com, "rock");
     }
     public void paperSelected(View view) {
+        paperSound.start();  // sound effect
         String com = comChoice();
         String gif = com+"_paper";
         updateDisplay(gif);
         updateResult(com, "paper");
     }
     public void scissorSelected(View view) {
+        scissorSound.start();  // sound effect
         String com = comChoice();
         String gif = com+"_scissor";
         updateDisplay(gif);

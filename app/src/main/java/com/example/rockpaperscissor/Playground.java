@@ -77,13 +77,30 @@ public class Playground extends AppCompatActivity {
         TextView comScoreTextView = findViewById(R.id.comScore);
         TextView playerScoreTextView = findViewById(R.id.playerScore);
 
+        String comChecked = "comCheckbox";
+        String playerChecked = "playerCheckbox";
+
         Animation blink_anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blinktext); // textanimation
+
+        int checkedIcon = getResources().getIdentifier("checked", "drawable", getPackageName());
 
         if(scorer.equals("both")){
             playerScore++;
             comScore++;
-            comScoreTextView.setText("Comp: "+comScore);    // set new score
-            playerScoreTextView.setText("You: "+playerScore);
+
+            // create checkbox id name in string
+            comChecked+= comScore;
+            playerChecked+= playerScore;
+            // create id from String
+            int comResourceId = getResources().getIdentifier(comChecked, "id", getPackageName());
+            int playerResourceId = getResources().getIdentifier(playerChecked, "id", getPackageName());
+            // find id
+            ImageView comScoreImageView = findViewById(comResourceId);
+            ImageView playerScoreImageView = findViewById(playerResourceId);
+            // update checkbox
+            comScoreImageView.setBackgroundResource(checkedIcon);
+            playerScoreImageView.setBackgroundResource(checkedIcon);
+
             comScoreTextView.setTextColor(getResources().getColor(R.color.green));  // set different color for scorer
             playerScoreTextView.setTextColor(getResources().getColor(R.color.green));
 
@@ -92,7 +109,14 @@ public class Playground extends AppCompatActivity {
         }
         else if(scorer.equals("player")){
             playerScore++;
-            playerScoreTextView.setText("You: " + playerScore);
+
+            // update checkbox
+            playerChecked+= playerScore;
+            int playerResourceId = getResources().getIdentifier(playerChecked, "id", getPackageName());
+            ImageView playerScoreImageView = findViewById(playerResourceId);
+            playerScoreImageView.setBackgroundResource(checkedIcon);
+
+            // update text color & animation
             playerScoreTextView.setTextColor(getResources().getColor(R.color.green));
             comScoreTextView.setTextColor(getResources().getColor(R.color.black));
 
@@ -100,7 +124,14 @@ public class Playground extends AppCompatActivity {
         }
         else {
             comScore++;
-            comScoreTextView.setText("Comp: " + comScore);
+
+            // update checkbox
+            comChecked+= comScore;
+            int comResourceId = getResources().getIdentifier(comChecked, "id", getPackageName());
+            ImageView comScoreImageView = findViewById(comResourceId);
+            comScoreImageView.setBackgroundResource(checkedIcon);
+
+            // update text color & animation
             comScoreTextView.setTextColor(getResources().getColor(R.color.green));
             playerScoreTextView.setTextColor(getResources().getColor(R.color.black));
 
@@ -167,10 +198,25 @@ public class Playground extends AppCompatActivity {
         comScore = 0;
         TextView comScoreTextView = findViewById(R.id.comScore);
         TextView playerScoreTextView = findViewById(R.id.playerScore);
-        comScoreTextView.setText("Comp: "+comScore);
-        playerScoreTextView.setText("You: "+playerScore);
+
         comScoreTextView.setTextColor(getResources().getColor(R.color.black));
         playerScoreTextView.setTextColor(getResources().getColor(R.color.black));
+
+        // reset the checkboxes
+        int checkbox = getResources().getIdentifier("checkbox", "drawable", getPackageName());
+
+        for(int i=1;i<=5;i++){
+            String playerChecked = "playerCheckbox"+i;
+            int playerResourceId = getResources().getIdentifier(playerChecked, "id", getPackageName());
+            ImageView playerScoreImageView = findViewById(playerResourceId);
+            playerScoreImageView.setBackgroundResource(checkbox);
+
+            String comChecked = "comCheckbox"+i;
+            int comResourceId = getResources().getIdentifier(comChecked, "id", getPackageName());
+            ImageView comScoreImageView = findViewById(comResourceId);
+            comScoreImageView.setBackgroundResource(checkbox);
+        }
+
     }
 
 }

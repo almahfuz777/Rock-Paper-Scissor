@@ -10,17 +10,53 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/comScore"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:gravity="left"
-        android:layout_marginHorizontal="30dp"
-        android:text="Comp: 0"
-        android:textColor="@color/black"
-        android:textSize="26dp"
-        android:textStyle="bold" />
+        android:layout_gravity="left"
+        android:layout_marginHorizontal="15dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/comScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comp: "
+            android:textColor="@color/black"
+            android:textSize="26dp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/comCheckbox1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/checkbox"/>
+        <ImageView
+            android:id="@+id/comCheckbox2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/checkbox"/>
+        <ImageView
+            android:id="@+id/comCheckbox3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/checkbox"/>
+        <ImageView
+            android:id="@+id/comCheckbox4"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/checkbox"/>
+        <ImageView
+            android:id="@+id/comCheckbox5"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/checkbox"/>
+    </LinearLayout>
+
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/display"
@@ -31,23 +67,60 @@
         android:background="@drawable/default_display"
         app:layout_constraintBottom_toBottomOf="@id/comScore" />
 
-    <TextView
-        android:id="@+id/playerScore"
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:gravity="right"
-        android:layout_marginHorizontal="30dp"
-        android:text="You: 0"
-        android:textColor="@color/black"
-        android:textSize="26dp"
-        android:textStyle="bold" />
+        android:layout_gravity="right"
+        android:layout_marginHorizontal="15dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/playerScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="You: "
+            android:textColor="@color/black"
+            android:textSize="26dp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/playerCheckbox1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/checkbox"/>
+        <ImageView
+            android:id="@+id/playerCheckbox2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/checkbox"/>
+        <ImageView
+            android:id="@+id/playerCheckbox3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/checkbox"/>
+        <ImageView
+            android:id="@+id/playerCheckbox4"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/checkbox"/>
+        <ImageView
+            android:id="@+id/playerCheckbox5"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/checkbox"/>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/selectMoveLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         android:background="#f0f8ff"
         android:hapticFeedbackEnabled="true"
         android:padding="10dp"
@@ -72,26 +145,26 @@
 
             <ImageView
                 android:id="@+id/rock"
-                android:onClick="rockSelected"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/rock" />
+                android:background="@drawable/rock"
+                android:onClick="rockSelected" />
 
             <ImageView
                 android:id="@+id/paper"
-                android:onClick="paperSelected"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/paper" />
+                android:background="@drawable/paper"
+                android:onClick="paperSelected" />
 
             <ImageView
                 android:id="@+id/scissor"
-                android:onClick="scissorSelected"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@drawable/scissor" />
+                android:background="@drawable/scissor"
+                android:onClick="scissorSelected" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -100,7 +173,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="40dp"
         android:text="Winnerr\n1 - 9"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="30dp"

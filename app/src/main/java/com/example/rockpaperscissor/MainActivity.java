@@ -1,6 +1,8 @@
 package com.example.rockpaperscissor;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +22,13 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
     }
+
+    // to the main game area
+    public void playGame(View view) {
+        Intent intent = new Intent(this, Playground.class);
+        startActivity(intent);
+    }
+
 }

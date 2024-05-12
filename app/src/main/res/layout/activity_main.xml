@@ -11,83 +11,24 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/comScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
         android:gravity="center"
-        android:text="Comp: 0"
-        android:textColor="@color/black"
-        android:textSize="26dp"
-        android:textStyle="bold" />
+        android:text="@string/app_name"
+        android:textSize="32dp"
+        android:textStyle="bold"/>
 
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/comChoice"
-        android:layout_width="350dp"
-        android:layout_height="230dp"
-        android:layout_gravity="center"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/paper_scissor"
-        app:layout_constraintBottom_toBottomOf="@id/comScore" />
-
-    <TextView
-        android:id="@+id/playerScore"
+    <ImageView
         android:layout_width="match_parent"
+        android:layout_margin="15dp"
+        android:layout_height="300dp"
+        android:background="@drawable/rpc_cover"/>
+
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:gravity="center"
-        android:text="You: 0"
-        android:textColor="@color/black"
-        android:textSize="26dp"
-        android:textStyle="bold" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="#f0f8ff"
-        android:hapticFeedbackEnabled="true"
-        android:padding="5dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Select Your Move"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginRight="8dp"
-
-                android:background="@drawable/rock" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginRight="6dp"
-
-                android:background="@drawable/paper" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-
-                android:background="@drawable/scissor" />
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
+        android:text="Play Game"
+        android:onClick="playGame"
+        android:textStyle="bold"/>
 
 </LinearLayout>

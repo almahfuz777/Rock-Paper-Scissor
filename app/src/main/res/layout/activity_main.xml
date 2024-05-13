@@ -1,34 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="#f0f8ff"
-    android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textSize="32dp"
-        android:textStyle="bold"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_margin="15dp"
-        android:layout_height="300dp"
-        android:background="@drawable/rpc_cover"/>
-
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play Game"
-        android:onClick="playGame"
-        android:textStyle="bold"/>
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center">
+        <ImageView
+            android:onClick="stats"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/stats"
+            android:layout_marginRight="5dp"
+            android:backgroundTint="@color/grey"
+            android:clickable="true"
+            android:focusable="true" />
+        <ImageView
+            android:onClick="info"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/info"
+            android:backgroundTint="@color/grey"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="32dp"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_margin="15dp"
+            android:layout_height="300dp"
+            android:background="@drawable/rpc_cover"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Play Game"
+            android:onClick="playGame"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="#f0f8ff"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="STATS"
+        android:textSize="32dp"
+        android:gravity="center"
+        android:textStyle="bold|italic"
+        android:textColor="@color/purple"
+        android:layout_marginTop="40dp"
+        />
+    <View
+        android:id="@+id/divider"
+        android:layout_width="350dp"
+        android:layout_height="3dp"
+        android:background="?android:attr/listDivider"
+        android:layout_below="@id/header"
+        android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Games Played -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28dp"
+            android:textColor="@color/purple"
+            android:text="Games Played" />
+        <TextView
+            android:id="@+id/gamesPlayed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:textColor="@color/grey"
+            android:textStyle="bold"
+            android:text="1690"/>
+
+        <!-- Games Won -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28dp"
+            android:textColor="@color/purple"
+            android:text="Games Won" />
+        <TextView
+            android:id="@+id/gamesWon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:textColor="@color/green"
+            android:textStyle="bold"
+            android:text="1111"/>
+
+        <!-- Games Lost -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28dp"
+            android:textColor="@color/purple"
+            android:text="Games Lost" />
+        <TextView
+            android:id="@+id/gamesLost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:text="579"/>
+
+        <!-- Games Drawn -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28dp"
+            android:textColor="@color/purple"
+            android:text="Games Drawn" />
+        <TextView
+            android:id="@+id/gamesDrawn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:textColor="#F3B95F"
+            android:textStyle="bold"
+            android:text="579"/>
+
+        <!-- Longest Streak -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28dp"
+            android:textColor="@color/purple"
+            android:text="Longest Streak" />
+        <TextView
+            android:id="@+id/longestStreak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:textColor="#FF8E8F"
+            android:textStyle="bold"
+            android:text="96"/>
+
+        <!-- Current Streak -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28dp"
+            android:textColor="@color/purple"
+            android:text="Current Streak" />
+        <TextView
+            android:id="@+id/currentStreak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:textColor="#93C572"
+            android:textStyle="bold"
+            android:text="69"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

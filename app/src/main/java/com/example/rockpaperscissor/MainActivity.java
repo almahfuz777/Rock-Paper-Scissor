@@ -31,4 +31,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void stats(View view) {
+        Intent intent = new Intent(this, GameStats.class);
+        startActivity(intent);
+    }
 }

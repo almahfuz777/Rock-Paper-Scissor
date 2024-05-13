@@ -27,6 +27,7 @@ public class Playground extends AppCompatActivity {
     private final String[] choices = {"rock", "paper", "scissor"};
     private ImageView display;
     private MediaPlayer rockSound, paperSound, scissorSound;
+    private GameStatsManager gameStatsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class Playground extends AppCompatActivity {
         });
 
         // inside onCreate
+        gameStatsManager = new GameStatsManager(this);
+
         rockSound = MediaPlayer.create(this, R.raw.rock_sound);
         paperSound = MediaPlayer.create(this, R.raw.paper_sound);
         scissorSound = MediaPlayer.create(this, R.raw.scissor_sound);
@@ -170,12 +173,15 @@ public class Playground extends AppCompatActivity {
         TextView result = findViewById(R.id.result);
         if(comScore==playerScore){
             result.setText("🤝Match Draw!🤝\n"+comScore+" : "+playerScore);
+            gameStatsManager.updateDraws();
         }
         else if(playerScore>comScore){
             result.setText("🎉You Win!🎉\n"+comScore+" : "+playerScore);
+            gameStatsManager.updateWins();
         }
         else {
             result.setText("😔You Lose!😔\n"+comScore+" : "+playerScore);
+            gameStatsManager.updateLosses();
         }
         result.setVisibility(View.VISIBLE);
 

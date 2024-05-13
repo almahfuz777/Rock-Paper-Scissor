@@ -2,8 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="green">#00FF00</color>
+    <color name="green">#006400</color>
     <color name="grey">#808080</color>
     <color name="gif_bg">#fefcfe</color>
     <color name="purple">#4e008e</color>
+    <color name="red">#FF0000</color>
+
 </resources>

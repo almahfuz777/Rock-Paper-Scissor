@@ -29,6 +29,14 @@
             android:name=".GameStats"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".Info"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".MultiplayerActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

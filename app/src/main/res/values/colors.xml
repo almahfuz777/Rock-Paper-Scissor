@@ -7,5 +7,6 @@
     <color name="gif_bg">#fefcfe</color>
     <color name="purple">#4e008e</color>
     <color name="red">#FF0000</color>
+    <color name="hintColor">#808080</color>
 
 </resources>

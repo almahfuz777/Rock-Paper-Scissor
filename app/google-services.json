@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "979712017726",
+    "project_id": "rockpaperscissors24",
+    "storage_bucket": "rockpaperscissors24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979712017726:android:fc3c8c2200ae4c52c8586f",
+        "android_client_info": {
+          "package_name": "com.example.rockpaperscissor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAtvmx4g3sgjIAAnSbJT9DXVIOZG78xVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

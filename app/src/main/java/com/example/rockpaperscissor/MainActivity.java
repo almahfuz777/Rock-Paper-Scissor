@@ -26,13 +26,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // to the main game area
-    public void playGame(View view) {
+    public void playSinglePlayer(View view) {
         Intent intent = new Intent(this, Playground.class);
         startActivity(intent);
     }
-
+    public void playMultiplayer(View view) {
+        Intent intent = new Intent(this, MultiplayerActivity.class);
+//        intent.putExtra("GAMEMODE","multiplayer");
+        startActivity(intent);
+    }
     public void stats(View view) {
         Intent intent = new Intent(this, GameStats.class);
+        startActivity(intent);
+    }
+    public void info(View view) {
+        Intent intent = new Intent(this, Info.class);
         startActivity(intent);
     }
 }

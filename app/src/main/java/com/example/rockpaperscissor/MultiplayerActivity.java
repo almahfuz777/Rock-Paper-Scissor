@@ -3,6 +3,7 @@ package com.example.rockpaperscissor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,9 +65,8 @@ public class MultiplayerActivity extends AppCompatActivity {
         updateVisibility();
 
         gameIDeditText.setInputType(InputType.TYPE_CLASS_NUMBER);   // make editable
-        gameIDeditText.setHint("Enter Room ID");
+        gameIDeditText.setHint("Enter Game ID");
         submitBtn.setText("JOIN GAME");
-
     }
 
     public void createBtn(View view) {
@@ -78,6 +78,12 @@ public class MultiplayerActivity extends AppCompatActivity {
         gameIDeditText.setClickable(false);
         gameIDeditText.setFocusable(false);
     }
+
+    private void updateVisibility(){
+        joinTypeLayout.setVisibility(View.GONE);
+        inputAreaLayout.setVisibility(View.VISIBLE);
+    }
+
     private String generateGameID() {
         gameID = String.valueOf(new Random().nextInt(9000) + 1000);
         database.child(gameID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -96,10 +102,6 @@ public class MultiplayerActivity extends AppCompatActivity {
 
         return gameID;
     }
-    private void updateVisibility(){
-        joinTypeLayout.setVisibility(View.GONE);
-        inputAreaLayout.setVisibility(View.VISIBLE);
-    }
 
     public void submit(View view){
         String username = usernameEditText.getText().toString();
@@ -110,8 +112,12 @@ public class MultiplayerActivity extends AppCompatActivity {
         if(joinType.equals("create")){
             createGame(username);
         }
-        else if(joinType.equals("join")){
-            gameID = String.valueOf(gameIDeditText.getText());
+        else if (joinType.equals("join")) {
+            gameID = gameIDeditText.getText().toString();
+            if (gameID.isEmpty()) {
+                Toast.makeText(this, "Enter valid Game ID", Toast.LENGTH_SHORT).show();
+                return;
+            }
             joinGame(username);
         }
     }
@@ -152,8 +158,7 @@ public class MultiplayerActivity extends AppCompatActivity {
         });
     }
     private void startGame(String player){
-        Intent intent = new Intent(this, Playground.class);
-        intent.putExtra("GAMEMODE", "multiplayer");
+        Intent intent = new Intent(this, MultiplayerPlayground.class);
         intent.putExtra("GAMEID", gameID);
         intent.putExtra("PLAYERID", player);
         startActivity(intent);

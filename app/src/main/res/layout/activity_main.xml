@@ -57,8 +57,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Play Game"
-            android:onClick="playGame"
+            android:text="Single Player"
+            android:onClick="playSinglePlayer"
+            android:textStyle="bold"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Multiplayer"
+            android:onClick="playMultiplayer"
             android:textStyle="bold"/>
     </LinearLayout>
 

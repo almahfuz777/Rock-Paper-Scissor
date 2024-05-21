@@ -25,6 +25,8 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
+import pl.droidsonroids.gif.GifImageView;
+
 
 public class MultiplayerPlayground extends AppCompatActivity {
     private int opponentScore = 0;
@@ -130,6 +132,7 @@ public class MultiplayerPlayground extends AppCompatActivity {
                     String myChoice = snapshot.child(playerID).getValue(String.class);
                     String opponentChoice = snapshot.child(opponentID).getValue(String.class);
                     resolveRound(myChoice, opponentChoice);
+                    updateDisplay(myChoice, opponentChoice);
                 }
             }
 
@@ -196,6 +199,17 @@ public class MultiplayerPlayground extends AppCompatActivity {
         isMyTurn = false;
         gameRef.child("turn").setValue(opponentID);
     }
+
+    private void updateDisplay(String myChoice, String opponentChoice){
+        String gifName = opponentChoice+"_"+myChoice;
+
+        int resourceId = getResources().getIdentifier(gifName, "drawable", getPackageName());
+
+        display = findViewById(R.id.display);
+        GifImageView imageView = (GifImageView) display;
+        imageView.setBackgroundResource(resourceId);
+    }
+
     private void resolveRound(String myChoice, String opponentChoice) {
         if (myChoice.equals(opponentChoice)) {
             scoring("both");
@@ -381,6 +395,13 @@ public class MultiplayerPlayground extends AppCompatActivity {
         gameRef.child("choices").removeValue();
 
         updateTurnIndicator();
+
+        // update to default gif
+        int resourceId = getResources().getIdentifier("default_display", "drawable", getPackageName());
+
+        display = findViewById(R.id.display);
+        GifImageView imageView = (GifImageView) display;
+        imageView.setBackgroundResource(resourceId);
 
     }
 }

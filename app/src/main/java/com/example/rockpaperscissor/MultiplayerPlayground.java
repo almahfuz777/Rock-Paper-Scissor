@@ -21,6 +21,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -36,6 +38,8 @@ public class MultiplayerPlayground extends AppCompatActivity {
     private TextView comScoreTextView, playerScoreTextView;
     private MediaPlayer rockSound, paperSound, scissorSound;
     private DatabaseReference gameRef;
+    private GameStatsManager gameStatsManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +60,34 @@ public class MultiplayerPlayground extends AppCompatActivity {
         // Firebase
         gameRef = FirebaseDatabase.getInstance().getReference("games").child(gameID);
 
+        // Game Stats Manager
+        gameStatsManager = new GameStatsManager(this);
+
         // views
         commentaryTextView = findViewById(R.id.commentary);
         selectMoveLayout = findViewById(R.id.selectMoveLayout);
         comScoreTextView = findViewById(R.id.comScore);
         playerScoreTextView = findViewById(R.id.playerScore);
 
-        comScoreTextView.setText(opponentID+": ");
-        playerScoreTextView.setText(playerID+": ");
+//        comScoreTextView.setText(getOpponentUsername());
+
+        playerScoreTextView.setText(intent.getStringExtra("USERNAME")+": ");
+        getOpponentUsername(opponentUsername -> {
+            comScoreTextView.setText(opponentUsername+": ");
+        });
+
+        // Set the player's disconnection status
+        gameRef.child(playerID).onDisconnect().setValue("🔃");
+        gameRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                checkAndDeleteGame(snapshot);
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Handle error
+            }
+        });
 
         // sound effects
         rockSound = MediaPlayer.create(this, R.raw.rock_sound);
@@ -72,6 +96,16 @@ public class MultiplayerPlayground extends AppCompatActivity {
 
         setupGameListeners();
 
+    }
+
+    // Method to check if both players have left and delete the game
+    private void checkAndDeleteGame(DataSnapshot snapshot) {
+        String player1Status = snapshot.child("player1").getValue(String.class);
+        String player2Status = snapshot.child("player2").getValue(String.class);
+
+        if ("🔃".equals(player1Status) && "🔃".equals(player2Status)) {
+            gameRef.removeValue();
+        }
     }
 
     private void setupGameListeners() {
@@ -105,6 +139,28 @@ public class MultiplayerPlayground extends AppCompatActivity {
             }
         });
     }
+    private String getOpponentUsername(OnOpponentUsernameRetrievedListener listener){
+        gameRef.child(opponentID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String opponentUsername = snapshot.getValue(String.class);
+                    listener.onOpponentUsernameRetrieved(opponentUsername);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Handle error
+            }
+        });
+        return "opponent";
+    }
+    public interface OnOpponentUsernameRetrievedListener {
+        void onOpponentUsernameRetrieved(String username);
+    }
+
     private void updateTurnIndicator() {
         if (isMyTurn) {
             commentaryTextView.setText("Your turn");
@@ -231,10 +287,13 @@ public class MultiplayerPlayground extends AppCompatActivity {
         TextView result = findViewById(R.id.result);
         if (playerScore == opponentScore) {
             result.setText("🤝Match Draw!🤝\n" + playerScore + " : " + opponentScore);
+            gameStatsManager.updateDraws();
         } else if (playerScore > opponentScore) {
             result.setText("🎉You Win!🎉\n" + opponentScore + " : " + playerScore);
+            gameStatsManager.updateWins();
         } else {
             result.setText("😔You Lose!😔\n" + opponentScore + " : " + playerScore);
+            gameStatsManager.updateLosses();
         }
         result.setVisibility(View.VISIBLE);
 
@@ -243,41 +302,73 @@ public class MultiplayerPlayground extends AppCompatActivity {
 
         Button resetBtn = findViewById(R.id.resetButton);
         resetBtn.setVisibility(View.VISIBLE);
+
+        commentaryTextView.setVisibility(View.GONE);
     }
+
     public void resetGame(View view) {
+        // Set the player's readiness flag in Firebase
+        gameRef.child("ready").child(playerID).setValue(true);
+
         TextView result = findViewById(R.id.result);
-        RelativeLayout layout = findViewById(R.id.selectMoveLayout);
+        result.setText("Waiting for opponent...");
+
         Button resetBtn = findViewById(R.id.resetButton);
-
-        result.setVisibility(View.GONE);
         resetBtn.setVisibility(View.GONE);
-        layout.setVisibility(View.VISIBLE);
 
+        // Add a listener to check if both players are ready
+        gameRef.child("ready").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean player1Ready = snapshot.hasChild("player1") && snapshot.child("player1").getValue(Boolean.class);
+                boolean player2Ready = snapshot.hasChild("player2") && snapshot.child("player2").getValue(Boolean.class);
+
+                if (player1Ready && player2Ready) {
+                    // Both players are ready, start a new game
+                    startNewGame();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Handle error
+            }
+        });
+
+    }
+
+    private void startNewGame(){
         playerScore = 0;
         opponentScore = 0;
 
-        TextView playerScoreTextView = findViewById(R.id.playerScore);
-        TextView opponentScoreTextView = findViewById(R.id.comScore);
+        TextView result = findViewById(R.id.result);
+        RelativeLayout layout = findViewById(R.id.selectMoveLayout);
+//        Button resetBtn = findViewById(R.id.resetButton);
+
+        result.setVisibility(View.GONE);
+        layout.setVisibility(View.VISIBLE);
+        commentaryTextView.setVisibility(View.VISIBLE);
 
         playerScoreTextView.setTextColor(getResources().getColor(R.color.black));
-        opponentScoreTextView.setTextColor(getResources().getColor(R.color.black));
+        comScoreTextView.setTextColor(getResources().getColor(R.color.black));
 
         int checkbox = getResources().getIdentifier("checkbox", "drawable", getPackageName());
 
         for (int i = 1; i <= 5; i++) {
-            String playerChecked = "playerCheckbox" + i;
+            String playerChecked = "playerCheckbox"+i;
             int playerResourceId = getResources().getIdentifier(playerChecked, "id", getPackageName());
             ImageView playerScoreImageView = findViewById(playerResourceId);
             playerScoreImageView.setBackgroundResource(checkbox);
 
-            String opponentChecked = "opponentCheckbox" + i;
-            int opponentResourceId = getResources().getIdentifier(opponentChecked, "id", getPackageName());
-            ImageView opponentScoreImageView = findViewById(opponentResourceId);
-            opponentScoreImageView.setBackgroundResource(checkbox);
+            String comChecked = "comCheckbox"+i;
+            int comResourceId = getResources().getIdentifier(comChecked, "id", getPackageName());
+            ImageView comScoreImageView = findViewById(comResourceId);
+            comScoreImageView.setBackgroundResource(checkbox);
         }
 
         // Reset Firebase database entries
         gameRef.child("choices").removeValue();
+
         gameRef.child("turn").setValue("player1");
 
         // Reset the turn indicator
@@ -285,7 +376,11 @@ public class MultiplayerPlayground extends AppCompatActivity {
         commentaryTextView.setTextColor(getResources().getColor(R.color.red));
         selectMoveLayout.setClickable(false);
 
+        // Reset the "ready" flag
+        gameRef.child("ready").removeValue();
         gameRef.child("choices").removeValue();
-        gameRef.child("turn").setValue("player1");
+
+        updateTurnIndicator();
+
     }
 }

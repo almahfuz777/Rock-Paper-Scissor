@@ -28,6 +28,7 @@ import java.util.Random;
 public class MultiplayerActivity extends AppCompatActivity {
     private String gameID;
     private String joinType;
+    private String username="";
     private DatabaseReference database;
     private EditText usernameEditText;
     private EditText gameIDeditText;
@@ -104,7 +105,7 @@ public class MultiplayerActivity extends AppCompatActivity {
     }
 
     public void submit(View view){
-        String username = usernameEditText.getText().toString();
+        username = usernameEditText.getText().toString();
         if (username.isEmpty()) {
             Toast.makeText(this, "Please enter a username", Toast.LENGTH_SHORT).show();
             return;
@@ -161,6 +162,7 @@ public class MultiplayerActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MultiplayerPlayground.class);
         intent.putExtra("GAMEID", gameID);
         intent.putExtra("PLAYERID", player);
+        intent.putExtra("USERNAME", username);
         startActivity(intent);
 
     }
